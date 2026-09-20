@@ -3,8 +3,9 @@
 using namespace std;
 
 int courseInfo(int &mark, int &credit, int &course) ;
-void calculateGrade(int mark, string &grade, double &gradePoint) ;
-void displayResult(double &totalCredit, double &totalCoursePoint, double &CPA) ;
+void calculateGrade(int &mark, string &grade, double &gradePoint) ;
+void displayCourseResult(int &course, string &grade, double &coursePoint) ;
+void displayFinalResult(double &totalCredit, double &totalCoursePoint, double &CPA) ;
 
 int main(){
 	
@@ -22,23 +23,33 @@ int main(){
 	
 		coursePoint = gradePoint*credit ;
 			
-		cout << "course " << course << " grade is " << grade << endl ;
-		cout << "course " << course << " point is " << fixed << setprecision(2) << coursePoint << endl ;
-		course++ ;
-			
+		displayCourseResult(course, grade, coursePoint) ;
+		
 		totalCredit = totalCredit + credit ;
 		totalCoursePoint = totalCoursePoint + coursePoint ;
 		
 		cout << "Add more course?(Y-yes/N-no): " ;
-		cin >> choice ;		
+		cin >> choice ;	
+		course++ ;
 	}while (choice != 'N') ;
 	
-displayResult(totalCredit, totalCoursePoint, CPA) ;
+displayFinalResult(totalCredit, totalCoursePoint, CPA) ;
 	
 return 0 ;
 }
 
-void calculateGrade(int mark, string &grade, double &gradePoint){
+int courseInfo(int &mark, int &credit, int &course){
+	cout << "\nEnter course " << course << " mark: ";
+	cin >> mark ;
+	if (mark > 0 && mark < 101){
+		cout << "Enter course " << course << " credit: ";
+		cin >> credit ;
+	}else 
+		cout << "Invalid mark! TRY AGAIN!" << endl ;
+	return mark, credit, course ;
+}
+
+void calculateGrade(int &mark, string &grade, double &gradePoint){
 	if (mark >= 90){grade = "A+"; gradePoint = 4.00 ;}
 	else if (mark >= 80){grade = "A "; gradePoint = 4.00 ;}	
 	else if (mark >= 75){grade = "A-"; gradePoint = 3.67 ;}	
@@ -54,18 +65,12 @@ void calculateGrade(int mark, string &grade, double &gradePoint){
 	else if (mark >= 0){grade = "E"; gradePoint = 0.00 ;}
 }
 
-int courseInfo(int &mark, int &credit, int &course){
-	cout << "\nEnter course " << course << " mark: ";
-	cin >> mark ;
-	if (mark > 0 && mark < 101){
-		cout << "Enter course " << course << " credit: ";
-		cin >> credit ;
-	}else 
-		cout << "Invalid mark! TRY AGAIN!" << endl ;
-	return mark, credit, course ;
+void displayCourseResult(int &course, string &grade, double &coursePoint){
+	cout << "course " << course << " grade is " << grade << endl ;
+	cout << "course " << course << " point is " << fixed << setprecision(2) << coursePoint << endl ;
 }
 
-void displayResult(double &totalCredit, double &totalCoursePoint, double &CPA){
+void displayFinalResult(double &totalCredit, double &totalCoursePoint, double &CPA){
 	cout << fixed << setprecision(0) << "\nYour total credit for this current semester: " << totalCredit << endl ;
 	cout << fixed << setprecision(2) << "Your total course point for this current semester: " << totalCoursePoint << endl ;
 	CPA = totalCoursePoint/totalCredit ;
