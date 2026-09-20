@@ -2,125 +2,72 @@
 #include <iomanip>
 using namespace std;
 
-int main()
-{
-    int mark, credit;
-    char addMore;
-    int course = 1;
+int courseInfo(int &mark, int &credit, int &course) ;
+void calculateGrade(int mark, string &grade, double &gradePoint) ;
+void displayResult(double &totalCredit, double &totalCoursePoint, double &CPA) ;
 
-    double totalCredit = 0;
-    double totalPoint = 0;
-    double gradePoint;
-    string grade;
+int main(){
+	
+	int course = 1 ;
+	int	mark, credit ;
+	string grade ;
+	double gradePoint, coursePoint ;
+	double totalCredit, totalCoursePoint, CPA ;
+	char choice ;
+	
+	do{
+		courseInfo(mark, credit, course) ;
+	
+		calculateGrade(mark, grade, gradePoint) ;
+	
+		coursePoint = gradePoint*credit ;
+			
+		cout << "course " << course << " grade is " << grade << endl ;
+		cout << "course " << course << " point is " << fixed << setprecision(2) << coursePoint << endl ;
+		course++ ;
+			
+		totalCredit = totalCredit + credit ;
+		totalCoursePoint = totalCoursePoint + coursePoint ;
+		
+		cout << "Add more course?(Y-yes/N-no): " ;
+		cin >> choice ;		
+	}while (choice != 'N') ;
+	
+displayResult(totalCredit, totalCoursePoint, CPA) ;
+	
+return 0 ;
+}
 
-    do
-    {
-        cout << "Enter course " << course << " mark: ";
-        cin >> mark;
+void calculateGrade(int mark, string &grade, double &gradePoint){
+	if (mark >= 90){grade = "A+"; gradePoint = 4.00 ;}
+	else if (mark >= 80){grade = "A "; gradePoint = 4.00 ;}	
+	else if (mark >= 75){grade = "A-"; gradePoint = 3.67 ;}	
+	else if (mark >= 70){grade = "B+"; gradePoint = 3.33 ;}	
+	else if (mark >= 65){grade = "B "; gradePoint = 3.00 ;}			
+	else if (mark >= 60){grade = "B-"; gradePoint = 2.67 ;}		
+	else if (mark >= 55){grade = "C+"; gradePoint = 2.33 ;}			
+	else if (mark >= 50){grade = "C "; gradePoint = 2.00 ;}			
+	else if (mark >= 45){grade = "C-"; gradePoint = 1.67 ;}		
+	else if (mark >= 40){grade = "D+"; gradePoint = 1.33 ;}		
+	else if (mark >= 35){grade = "D "; gradePoint = 1.00 ;}			
+	else if (mark >= 30){grade = "D-"; gradePoint = 0.67 ;}		
+	else if (mark >= 0){grade = "E"; gradePoint = 0.00 ;}
+}
 
-        while (mark < 0 || mark > 100)
-        {
-            cout << "Invalid mark. Enter again: ";
-            cin >> mark;
-        }
+int courseInfo(int &mark, int &credit, int &course){
+	cout << "\nEnter course " << course << " mark: ";
+	cin >> mark ;
+	if (mark > 0 && mark < 101){
+		cout << "Enter course " << course << " credit: ";
+		cin >> credit ;
+	}else 
+		cout << "Invalid mark! TRY AGAIN!" << endl ;
+	return mark, credit, course ;
+}
 
-        cout << "Enter course " << course << " credit: ";
-        cin >> credit;
-
-        if (mark >= 90)
-        {
-            grade = "A+";
-            gradePoint = 4.00;
-        }
-        else if (mark >= 80)
-        {
-            grade = "A";
-            gradePoint = 4.00;
-        }
-        else if (mark >= 75)
-        {
-            grade = "A-";
-            gradePoint = 3.67;
-        }
-        else if (mark >= 70)
-        {
-            grade = "B+";
-            gradePoint = 3.33;
-        }
-        else if (mark >= 65)
-        {
-            grade = "B";
-            gradePoint = 3.00;
-        }
-        else if (mark >= 60)
-        {
-            grade = "B-";
-            gradePoint = 2.67;
-        }
-        else if (mark >= 55)
-        {
-            grade = "C+";
-            gradePoint = 2.33;
-        }
-        else if (mark >= 50)
-        {
-            grade = "C";
-            gradePoint = 2.00;
-        }
-        else if (mark >= 45)
-        {
-            grade = "C-";
-            gradePoint = 1.67;
-        }
-        else if (mark >= 40)
-        {
-            grade = "D+";
-            gradePoint = 1.33;
-        }
-        else if (mark >= 35)
-        {
-            grade = "D";
-            gradePoint = 1.00;
-        }
-        else if (mark >= 30)
-        {
-            grade = "D-";
-            gradePoint = 0.67;
-        }
-        else
-        {
-            grade = "E";
-            gradePoint = 0.00;
-        }
-
-        double coursePoint = credit * gradePoint;
-
-        cout << "Course " << course << " grade is " << grade << endl;
-        cout << fixed << setprecision(2);
-        cout << "Course " << course << " point is " << coursePoint << endl;
-
-        totalCredit += credit;
-        totalPoint += coursePoint;
-
-        cout << "Add more course? (Y-yes / N-no): ";
-        cin >> addMore;
-
-        course++;
-
-        cout << endl;
-
-    } while (addMore == 'Y' || addMore == 'y');
-
-    double cpa = totalPoint / totalCredit;
-
-    cout << "Your total credit for this current semester: "
-         << totalCredit << endl;
-
-    cout << "Your total course point for this current semester: "
-         << totalPoint << endl;
-
-    cout << "Your CPA for this current semester: "
-         << cpa << endl;
-
-    return 0;
+void displayResult(double &totalCredit, double &totalCoursePoint, double &CPA){
+	cout << fixed << setprecision(0) << "\nYour total credit for this current semester: " << totalCredit << endl ;
+	cout << fixed << setprecision(2) << "Your total course point for this current semester: " << totalCoursePoint << endl ;
+	CPA = totalCoursePoint/totalCredit ;
+	cout << fixed << setprecision(2) << "Your CPA for this current semester: " << CPA << endl ;
 }
