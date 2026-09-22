@@ -5,7 +5,7 @@ using namespace std;
 int courseInfo(int &mark, int &credit, int &course) ;
 void calculateGrade(int &mark, string &grade, double &gradePoint) ;
 void displayCourseResult(int &course, string &grade, double &coursePoint) ;
-void displayFinalResult(double &totalCredit, double &totalCoursePoint, double &CPA) ;
+double displayFinalResult(double totalCredit, double totalCoursePoint, double CPA) ;
 
 int main(){
 	
@@ -25,15 +25,15 @@ int main(){
 			
 		displayCourseResult(course, grade, coursePoint) ;
 		
+		course++ ;	
 		totalCredit = totalCredit + credit ;
 		totalCoursePoint = totalCoursePoint + coursePoint ;
 		
 		cout << "Add more course?(Y-yes/N-no): " ;
-		cin >> choice ;	
-		course++ ;
+		cin >> choice ;		
 	}while (choice != 'N') ;
 	
-displayFinalResult(totalCredit, totalCoursePoint, CPA) ;
+	displayFinalResult(totalCredit, totalCoursePoint, CPA) ;
 	
 return 0 ;
 }
@@ -70,9 +70,10 @@ void displayCourseResult(int &course, string &grade, double &coursePoint){
 	cout << "course " << course << " point is " << fixed << setprecision(2) << coursePoint << endl ;
 }
 
-void displayFinalResult(double &totalCredit, double &totalCoursePoint, double &CPA){
+double displayFinalResult(double totalCredit, double totalCoursePoint, double CPA){
 	cout << fixed << setprecision(0) << "\nYour total credit for this current semester: " << totalCredit << endl ;
 	cout << fixed << setprecision(2) << "Your total course point for this current semester: " << totalCoursePoint << endl ;
 	CPA = totalCoursePoint/totalCredit ;
 	cout << fixed << setprecision(2) << "Your CPA for this current semester: " << CPA << endl ;
+	return totalCredit, totalCoursePoint, CPA ;
 }
